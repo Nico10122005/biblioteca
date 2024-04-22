@@ -5,7 +5,7 @@
         host: "10.20.2.172",
         user: "TPS",
         password: "tttpppsss",
-        database: "biblioteca"
+        database: "td"
     }, { debug: true });
     
     connpool.query('SELECT 1 + 1 AS solution', function (error, results, fields) {

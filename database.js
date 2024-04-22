@@ -2,7 +2,7 @@
     const { HOST, USERNAME, PASSWORD, DBNAME, PORT } = process.env;
     console.log();
     const connpool = mysql.createPool({
-        host: "127.0.0.1",
+        host: "10.20.2.172",
         user: "TPS",
         password: "tttpppsss",
         database: "biblioteca"

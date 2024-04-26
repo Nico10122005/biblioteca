@@ -3,9 +3,9 @@
     console.log();
     const connpool = mysql.createPool({
         host: "10.20.2.173",
-        user: "TPS",
-        password: "tttpppsss",
-        database: "td",
+        user: "tps",
+        password: "ttppss",
+        database: "biblioteca",
     }, { debug: true });
     
     connpool.query('SELECT 1 + 1 AS solution', function (error, results, fields) {

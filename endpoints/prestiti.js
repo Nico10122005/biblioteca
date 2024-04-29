@@ -1,6 +1,6 @@
 function endpoint(app, connpool) {
 
-    app.post("/api/libri", (req, res) => {
+    app.post("/api/prestiti", (req, res) => {
         var errors = []
         /* controllo dati inseriti
         if (!req.body.description) {
@@ -19,7 +19,7 @@ function endpoint(app, connpool) {
             status: req.body.status,
         }
 
-        var sql = 'INSERT INTO libro (description, status) VALUES (?,?)'
+        var sql = 'INSERT INTO prestito (description, status) VALUES (?,?)'
         var params = [data.description, data.status]
         connpool.query(sql, params, (error, results) => {
             if (error) {
@@ -38,8 +38,8 @@ function endpoint(app, connpool) {
 
 
 
-    app.get("/api/libri", (req, res, next) => {
-        var sql = "select * from libro"
+    app.get("/api/prestiti", (req, res, next) => {
+        var sql = "select * from prestito"
         var params = []
         connpool.query(sql, params, (err, rows) => {
             if (err) {
@@ -54,8 +54,8 @@ function endpoint(app, connpool) {
     });
 
 
-    app.get("/api/libri/:id", (req, res) => {
-        var sql = "select * from libro where libro_codice = ?"
+    app.get("/api/prestiti/:id", (req, res) => {
+        var sql = "select * from prestito where prestito_id = ?"
         var params = [req.params.id]
         connpool.query(sql, params, (err, rows) => {
             if (err) {
@@ -70,16 +70,16 @@ function endpoint(app, connpool) {
     });
 
 
-    app.put("/api/libri/:id", (req, res) => {
+    app.put("/api/prestiti/:id", (req, res) => {
         var data = {
             description: req.body.description,
             status: req.body.status,
         }
         connpool.execute(
-            `UPDATE libro set 
+            `UPDATE prestito set 
                description = COALESCE(?,description), 
                status = COALESCE(?,status) 
-               WHERE libro_codice = ?`,
+               WHERE prestito_id = ?`,
             [data.description, data.status, req.params.id],
             function (err, result) {
                 if (err){
@@ -97,9 +97,9 @@ function endpoint(app, connpool) {
 
 
 
-    app.delete("/api/libri/:id", (req, res) => {
+    app.delete("/api/prestiti/:id", (req, res) => {
         connpool.execute(
-            'DELETE FROM libro WHERE libro_codice = ?',
+            'DELETE FROM task WHERE prestito_id = ?',
             [req.params.id],
             function (err, result) {
                 if (err){

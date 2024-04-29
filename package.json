@@ -1,5 +1,5 @@
 {
-  "name": "td",
+  "name":"biblioteca",
   "version": "1.0.0",
   "description": "Progetto di esempio REST",
   "main": "server.js",

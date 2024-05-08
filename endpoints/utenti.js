@@ -79,7 +79,7 @@ function endpoint(app, connpool) {
             `UPDATE utente set 
                description = COALESCE(?,description), 
                status = COALESCE(?,status) 
-               WHERE task_id = ?`,
+               WHERE utente_id = ?`,
             [data.description, data.status, req.params.id],
             function (err, result) {
                 if (err){

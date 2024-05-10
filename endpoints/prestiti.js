@@ -19,10 +19,10 @@ function endpoint(app, connpool) {
             dataFinePrevista: req.body.dataFinePrevista,
             dataFineEffettiva: req.body.dataFineEffettiva,
             codice: req.body.codice,
-            idUtente: req.body.idUtente
+            idUtente: req.body.idUtente,
         }
 
-        var sql = 'INSERT INTO prestito (idPrestito,dataInizio,dataFinePrevista,dataFineEffettiva,codice,idUtente) VALUES (?,?,?)'
+        var sql = 'INSERT INTO prestito (idPrestito,dataInizio,dataFinePrevista,dataFineEffettiva,codice,idUtente) VALUES (?,?,?,?,?,?)'
         var params = [data.idPrestito, data.dataInizio, data.dataFinePrevista,data.dataFineEffettiva,data.codice,data.idUtente]
         connpool.query(sql, params, (error, results) => {
             if (error) {
@@ -37,8 +37,7 @@ function endpoint(app, connpool) {
             console.log(results)
         });
 
-    })
-
+    });
 
 
     app.get("/api/prestiti", (req, res, next) => {

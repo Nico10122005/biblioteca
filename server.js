@@ -21,6 +21,7 @@ app.get("/", (req, res, next) => {
 });
 
 require("./endpoints/tasks.js")(app,connpool)
+require("./endpoints/libri.js")(app,connpool)
 // Insert here other API endpoints
 
 // Default response for any other request

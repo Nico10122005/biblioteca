@@ -55,7 +55,7 @@ function endpoint(app, connpool) {
 
 
     app.get("/api/utenti/:id", (req, res) => {
-        var sql = "select * from utente where utente_id = ?"
+        var sql = "select * from utente AS U where U.idutente = ?"
         var params = [req.params.id]
         connpool.query(sql, params, (err, rows) => {
             if (err) {
@@ -99,7 +99,7 @@ function endpoint(app, connpool) {
 
     app.delete("/api/utenti/:id", (req, res) => {
         connpool.execute(
-            'DELETE FROM utente WHERE utente_id = ?',
+            'DELETE FROM utente AS U WHERE U.idutente = ?',
             [req.params.id],
             function (err, result) {
                 if (err){

@@ -57,7 +57,8 @@ function endpoint(app, connpool) {
 
 
     app.get("/api/prestiti/:id", (req, res) => {
-        var sql = "select * from prestito where prestito.idPrestito = ?"
+
+var sql = "select * from prestito where prestito.idPrestito = ?"
         var params = [req.params.id]
         connpool.query(sql, params, (err, rows) => {
             if (err) {

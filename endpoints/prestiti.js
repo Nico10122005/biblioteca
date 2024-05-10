@@ -15,12 +15,15 @@ function endpoint(app, connpool) {
             return;
         }
         var data = {
-            description: req.body.description,
-            status: req.body.status,
+            dataInizio: req.body.dataInizio,
+            dataFinePrevista: req.body.dataFinePrevista,
+            dataFineEffettiva: req.body.dataFineEffettiva,
+            codice: req.body.codice,
+            idUtente: req.body.idUtente
         }
 
-        var sql = 'INSERT INTO prestito (description, status) VALUES (?,?)'
-        var params = [data.description, data.status]
+        var sql = 'INSERT INTO prestito (idPrestito,dataInizio,dataFinePrevista,dataFineEffettiva,codice,idUtente) VALUES (?,?,?)'
+        var params = [data.idPrestito, data.dataInizio, data.dataFinePrevista,data.dataFineEffettiva,data.codice,data.idUtente]
         connpool.query(sql, params, (error, results) => {
             if (error) {
                 res.status(400).json({ "error": error.message })
@@ -55,7 +58,7 @@ function endpoint(app, connpool) {
 
 
     app.get("/api/prestiti/:id", (req, res) => {
-        var sql = "select * from prestito where prestito_id = ?"
+        var sql = "select * from prestito where prestito.idPrestito = ?"
         var params = [req.params.id]
         connpool.query(sql, params, (err, rows) => {
             if (err) {
@@ -72,15 +75,21 @@ function endpoint(app, connpool) {
 
     app.put("/api/prestiti/:id", (req, res) => {
         var data = {
-            description: req.body.description,
-            status: req.body.status,
+            dataInizio: req.body.dataInizio,
+            dataFinePrevista: req.body.dataFinePrevista,
+            dataFineEffettiva: req.body.dataFineEffettiva,
+            codice: req.body.codice,
+            idUtente: req.body.idUtente,
         }
         connpool.execute(
             `UPDATE prestito set 
-               description = COALESCE(?,description), 
-               status = COALESCE(?,status) 
-               WHERE prestito_id = ?`,
-            [data.description, data.status, req.params.id],
+                dataInizio= COALESCE(?,dataInizio),
+               dataFinePrevista= COALESCE(?,dataFinePrevista), 
+               dataFineEffettiva = COALESCE(?,dataFineEffettiva),
+               codice= COALESCE(?,codice),
+               idUtente= COALESCE(?,idUtente),
+               WHERE prestito.idPrestito = ?`,
+            [data.dataInizio, data.dataFinePrevista, data.dataFineEffettiva,data.codice,data.idUtente, req.params.id],
             function (err, result) {
                 if (err){
                     res.status(400).json({"error": err.message})
@@ -99,7 +108,7 @@ function endpoint(app, connpool) {
 
     app.delete("/api/prestiti/:id", (req, res) => {
         connpool.execute(
-            'DELETE FROM prestito WHERE prestito_id = ?',
+            'DELETE FROM prestito WHERE prestito.idPrestito = ?',
             [req.params.id],
             function (err, result) {
                 if (err){

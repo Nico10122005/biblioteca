@@ -99,7 +99,7 @@ function endpoint(app, connpool) {
 
     app.delete("/api/prestiti/:id", (req, res) => {
         connpool.execute(
-            'DELETE FROM task WHERE prestito_id = ?',
+            'DELETE FROM prestito WHERE prestito_id = ?',
             [req.params.id],
             function (err, result) {
                 if (err){

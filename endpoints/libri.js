@@ -79,11 +79,10 @@ function endpoint(app, connpool) {
         }
         connpool.execute(
             `UPDATE libro set 
-                codice = COALESCE(?,codice),
                genere = COALESCE(?,genere), 
                titolo = COALESCE(?,titolo) 
                WHERE libro.codice = ?`,
-            [data.codice, data.genere, data.titolo, req.params.id],
+            [data.genere, data.titolo, req.params.id],
             function (err, result) {
                 if (err){
                     res.status(400).json({"error": err.message})
